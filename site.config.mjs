@@ -68,7 +68,7 @@ export default {
       description: site.description,
       email: c.email,
       telephone: c.phoneHref.replace("tel:", ""),
-      areaServed: "Northern Ireland and Ireland",
+      areaServed: "Northern Ireland",
     },
   },
   privacy: {
