@@ -9,10 +9,9 @@
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   },
-  // Uncomment once the domain's zone is on this Cloudflare account.
-  // "routes": [
-  //   { "pattern": "ardleevandogfood.co.uk", "custom_domain": true },
-  //   { "pattern": "www.ardleevandogfood.co.uk", "custom_domain": true }
-  // ],
+  "routes": [
+    { "pattern": "ardleevandogfood.co.uk", "custom_domain": true },
+    { "pattern": "www.ardleevandogfood.co.uk", "custom_domain": true }
+  ],
   "observability": { "enabled": true, "head_sampling_rate": 0.1 }
 }
