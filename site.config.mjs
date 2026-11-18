@@ -38,7 +38,21 @@ const showcaseItems = products.map((p) => ({
       { heading: "Feeding guide", wide: true, text: p.feeding.intro, table: p.feeding.table, bullets: p.feeding.notes },
     ],
   },
-  schema: { "@type": "Product", brand: { "@type": "Brand", name: "Chapel Farm" }, weight: p.weight },
+  // Google Product snippets need offers (or reviews); the guide price is the offer.
+  // No availability, shipping or returns claims: the site says to ask for those.
+  schema: {
+    "@type": "Product",
+    brand: { "@type": "Brand", name: "Chapel Farm" },
+    weight: { "@type": "QuantitativeValue", value: parseFloat(p.weight), unitCode: "KGM" },
+    offers: {
+      "@type": "Offer",
+      url: `${site.url}/#${p.id}`,
+      price: p.price,
+      priceCurrency: "GBP",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@id": `${site.url}/#organization` },
+    },
+  },
 }));
 
 export default {
@@ -71,6 +85,22 @@ export default {
       areaServed: "Northern Ireland",
     },
   },
+  // Old WordPress/WooCommerce URLs still in Google's index (their Product markup
+  // is behind the "Missing field 'name'" Search Console errors). Specific rules
+  // first; the splats catch anything else under the old shop paths.
+  redirects: [
+    { from: "/product/chapel-farm-puppy-junior/", to: "/#puppy-junior" },
+    { from: "/product/chapel-farm-original-20/", to: "/#original-20" },
+    { from: "/product/chapel-farm-performance-24/", to: "/#performance-24" },
+    { from: "/product/chapel-farm-performance-24-2/", to: "/#performance-24-plus" },
+    { from: "/product/chapel-farm-lamb/", to: "/#invest-n-digest-lamb" },
+    { from: "/product/*", to: "/#range" },
+    { from: "/product-category/*", to: "/#range" },
+    { from: "/shop/", to: "/#range" },
+    { from: "/cart/", to: "/#buy" },
+    { from: "/about-ardleevan-dog-food/", to: "/#about" },
+    { from: "/contact-ardleevan-dog-food/", to: "/#contact" },
+  ],
   privacy: {
     controller: { name: `${site.brand} Dog Food`, email: c.email, phone: c.phoneDisplay, address: c.area },
     regulator: "ico",
